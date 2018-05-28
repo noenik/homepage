@@ -1,0 +1,61 @@
+<div class="row mt-5 justify-content-center">
+  <input #name>
+  <button class="btn btn-success"
+          (click)="addCat(name.value); name.value=''">
+    Add Category
+  </button>
+</div>
+
+<div class="row mt-5 justify-content-center">
+  <div class="col-2" *ngFor="let cat of categories">
+
+    <div class="card">
+      <div class="card-header ">
+        <h5>{{ cat.name }}
+          <span class="oi oi-plus float-right"
+                (click)="addLinkForm(cat)">
+          </span>
+        </h5>
+      </div>
+
+      <div class="list-group-flush">
+        <div class="list-group-item" *ngIf="addTo == cat">
+          <label for="id_linkText_{{ cat.id }}" class="sr-only">Text:</label>
+          <input #linkText class="form-control" id="id_linkText_{{ cat.id }}" placeholder="Text">
+
+          <label for="id_linkUrl_{{ cat.id }}" class="sr-only">Url:</label>
+          <div class="input-group">
+            <input #linkUrl class="form-control" id="id_linkUrl_{{ cat.id }}" placeholder="URL">
+            <div class="input-group-append">
+              <button class="btn btn-success" (click)="addLink(linkText.value, linkUrl.value, cat)">
+                Add
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <a href="http://{{ link.url }}" *ngFor="let link of cat.links"
+           class="list-group-item list-group-item-action"
+          (mouseenter)="onMouseEnter(link)"
+          (mouseleave)="onMouseLeave()">
+
+          {{ link.text }}
+
+          <div class="link-btns float-right" *ngIf="link == hoverLink">
+            <span class="oi oi-pencil edit-link"
+                  (click)="onSelect(link, $event)">
+            </span>
+            <span class="oi oi-x remvoe-link"
+                  (click)="removeLink(link, cat, $event)">
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mt-5 justify-content-center">
+  <app-link-detail [link]="selectedLink"></app-link-detail>
+</div>

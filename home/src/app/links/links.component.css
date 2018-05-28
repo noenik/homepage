@@ -1,0 +1,7 @@
+.edit-link :hover {
+  color: #0000cc;
+}
+
+.hide-btns .link-btns {
+  display: none;
+}

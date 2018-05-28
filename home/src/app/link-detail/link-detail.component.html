@@ -1,0 +1,16 @@
+<div *ngIf="link">
+  <h5>
+    {{ link.text }}
+  </h5>
+  <div>
+    <label>Text:
+      <input [(ngModel)]="link.text" placeholder="Link text" class="form-control">
+    </label>
+    <label>URL:
+      <input [(ngModel)]="link.url" placeholder="URL" class="form-control">
+    </label>
+    <button class="btn btn-success" (click)="save()">
+      Save
+    </button>
+  </div>
+</div>
