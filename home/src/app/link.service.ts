@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Category} from "./category";
-import {catchError} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs/observable/of";
 import {Link} from "./link";
 import {CategorySimple} from "./category-simple";
+import {MessageService} from "./message.service";
 
 const httpOptions = {
   headers: new HttpHeaders({'content-type': 'application/json'})
@@ -19,7 +20,9 @@ export class LinkService {
   private linksUrl = "http://localhost:8000/api/links/";
 
 
-  constructor(private http: HttpClient,) {
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService) {
   }
 
   getCategories(): Observable<Category[]> {
@@ -39,12 +42,14 @@ export class LinkService {
   updateCategory(category: CategorySimple): Observable<any> {
     let catUrl = this.categoryUrl + category.id;
     return this.http.put(catUrl, category, httpOptions).pipe(
+      tap(cats => this.log(`Category updated`)),
       catchError(this.handleError('updateCategory', []))
     );
   }
 
   addCategory(category: Category): Observable<Category> {
     return this.http.post<Category>(this.categoriesUrl, category, httpOptions).pipe(
+      tap(cat => this.log(`Category added`)),
       catchError(this.handleError<Category>('addCategory'))
     )
   }
@@ -52,12 +57,14 @@ export class LinkService {
   updateLink(link: Link): Observable<any> {
     let linkUrl = this.linkUrl + link.id;
     return this.http.put(linkUrl, link, httpOptions).pipe(
+      tap(link => this.log(`Link updated`)),
       catchError(this.handleError('updateLink', []))
     )
   }
 
   addLink (link: Link): Observable<Link> {
     return this.http.post<Link>(this.linksUrl, link, httpOptions).pipe(
+      tap(link => this.log(`Link added`)),
       catchError(this.handleError<Link>('addLink'))
     );
   }
@@ -67,15 +74,22 @@ export class LinkService {
     const url = `${this.linkUrl}${id}`;
 
     return this.http.delete<Link>(url, httpOptions).pipe(
+      tap(link => this.log(`Link removed`)),
       catchError(this.handleError<Link>('removeLink'))
     )
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.log(error);
+      console.error(error);
+
+      this.log(`${operation} failed: ${error.message}`);
 
       return of(result as T);
     }
+  }
+
+  private log(message: string) {
+    this.messageService.add('LinkService: ' + message)
   }
 }

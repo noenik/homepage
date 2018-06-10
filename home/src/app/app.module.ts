@@ -9,6 +9,7 @@ import {LinkService} from "./link.service";
 import { LinkDetailComponent } from './link-detail/link-detail.component';
 import {FormsModule} from "@angular/forms";
 import { MessagesComponent } from './messages/messages.component';
+import {MessageService} from "./message.service";
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { MessagesComponent } from './messages/messages.component';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [LinkService],
+  providers: [LinkService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

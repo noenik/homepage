@@ -1,3 +1,13 @@
-<p>
-  messages works!
-</p>
+<div class="col-3" id="messages">
+  <div class="w-100">
+    Messages:
+    <span class="oi oi-x float-right"
+          (click)="messageService.clear()"></span>
+  </div>
+
+  <div *ngIf="messageService.messages.length">
+    <div *ngFor="let message of messageService.messages" class="alert alert-secondary alert-dismissable">
+      {{ message }}
+    </div>
+  </div>
+</div>
