@@ -19,6 +19,15 @@ class LinkList(generics.ListCreateAPIView):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
 
+    def get_serializer(self, *args, **kwargs):
+        if "data" in kwargs:
+            data = kwargs["data"]
+
+            if isinstance(data, list):
+                kwargs["many"] = True
+
+        return super(LinkList, self).get_serializer(*args, **kwargs)
+
 
 class LinkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Link.objects.all()
