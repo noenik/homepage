@@ -3,3 +3,4 @@ django-angular
 djangorestframework==3.8.2
 coreapi
 django-cors-headers
+djangorestframework-bulk
