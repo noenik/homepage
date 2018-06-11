@@ -1,9 +1,10 @@
 from rest_framework import serializers
+from rest_framework_bulk import BulkSerializerMixin
 
 from api.models import Category, Link
 
 
-class LinkSerializer(serializers.ModelSerializer):
+class LinkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     class Meta:
         model = Link
         fields = '__all__'
@@ -22,3 +23,4 @@ class CategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
