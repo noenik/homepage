@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 
 from api.models import Category, Link
 from api.serializers import CategorySerializer, LinkSerializer, CategoryListSerializer
@@ -24,11 +25,7 @@ class LinkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
 
-    def get_serializer(self, *args, **kwargs):
-        if "data" in kwargs:
-            data = kwargs["data"]
 
-            if isinstance(data, list):
-                kwargs["many"] = True
-
-        return super(LinkDetail, self).get_serializer(*args, **kwargs)
+class LinkBulk(ListBulkCreateUpdateDestroyAPIView):
+    queryset = Link.objects.all()
+    serializer_class = LinkSerializer

@@ -8,7 +8,7 @@ urlpatterns = [
     path('category/<int:pk>', v.CategoryDetail.as_view()),
     path('links/', v.LinkList.as_view()),
     path('link/<int:pk>', v.LinkDetail.as_view()),
-    path('link/', v.LinkDetail.as_view()),
+    path('linkbulk/', v.LinkBulk.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
