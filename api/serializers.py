@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework_bulk import BulkSerializerMixin
+from rest_framework_bulk import BulkSerializerMixin, BulkListSerializer
 
 from api.models import Category, Link
 
@@ -8,6 +8,7 @@ class LinkSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     class Meta:
         model = Link
         fields = '__all__'
+        list_serializer_class = BulkListSerializer
 
 
 class CategorySerializer(serializers.ModelSerializer):

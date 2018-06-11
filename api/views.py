@@ -28,4 +28,4 @@ class LinkDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class LinkBulk(ListBulkCreateUpdateDestroyAPIView):
     queryset = Link.objects.all()
-    list_serializer_class = LinkSerializer
+    serializer_class = LinkSerializer
